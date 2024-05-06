@@ -1,0 +1,54 @@
+#cloud-config
+
+package_upgrade: true
+runcmd:
+
+ - sudo apt install openjdk-11-jre -y
+
+ - curl -fsSL [^1^][5] | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+ - echo 'deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] [^2^][6] binary/' | sudo tee 
+
+/etc/apt/sources.list.d/jenkins.list > /dev/null
+
+ - sudo apt-get update && sudo apt-get install jenkins -y
+
+ - sudo service jenkins restart
+
+Run the following commands:
+
+az group create --name jenkins-get-started-rg --location eastus
+
+az vm create \
+
+ --resource-group jenkins-get-started-rg \
+
+ --name jenkins-get-started-vm \
+
+ --image UbuntuLTS \
+
+ --admin-username "azureuser" \
+
+ --generate-ssh-keys \
+
+ --public-ip-sku Standard \
+
+ --custom-data cloud-init-jenkins.txt
+
+Verify the creation of the new virtual machine:
+
+az vm list -d -o table --query "[?name=='jenkins-get-started-vm']"
+
+Configure Jenkins:
+
+Retrieve the public IP address of the virtual machine:
+
+az vm show --resource-group jenkins-get-started-rg --name jenkins-get-started-vm -d --query 
+
+"[publicIps]" --output tsv
+
+SSH into the virtual machine using the IP address:
+
+ssh azureuser@<ip_address>
+
+Upon successful connection, you’ll see the prompt: azureuser@jenkins-get-started-vm.
