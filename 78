@@ -1,0 +1,193 @@
+
+ansible exp .docx
+Install ansible in control node refer by this link -> https://spacelift.io/blog/how-to-install-ansible
+
+
+
+
+
+Execution command in terminal
+
+
+
+ansible-playbook -i hosts webapp.yml --ask-become-pass
+
+
+hosts
+
+
+[web_servers]
+
+192.168.1.13  ansible_user=vm-mn
+
+
+Webapp.yml
+
+
+---
+
+- name: Setup Web Application Infrastructure
+
+  hosts: web_servers
+
+  become: true
+
+  tasks:
+
+    - name: Update apt package cache
+
+      apt:
+
+        update_cache: yes
+
+
+    - name: Install Nginx
+
+      apt:
+
+        name: nginx
+
+        state: present
+
+
+    - name: Copy HTML file
+
+      copy:
+
+        src: index.html
+
+        dest: /var/www/html/index.html
+
+      notify: Restart Nginx
+
+
+  handlers:
+
+    - name: Restart Nginx
+
+      service:
+
+        name: nginx
+
+        state: restarted
+
+
+Index.html
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Web App</title>
+
+</head>
+
+<body>
+
+    <h1>Hello, World!</h1>
+
+    <p>This is a simple web application deployed using Ansible.</p>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$     export LC_ALL=en_US.UTF-8
+
+
+
+https://youtube.com/playlist?list=PLFsruMLvckLlxdD-4KHGGkMmiKmM4W0vU
+
+
+
+https://chat.openai.com/share/fd75ec04-5a94-4ae3-a2d6-6c7e01352208
+
+
+https://chat.openai.com/share/68bcf247-e7f6-4934-8116-7c1e417e836b
+
+
+
+https://chat.openai.com/share/c5aa38d3-1948-44e8-ac6c-423b836b1fc4
+
+
+
+https://chat.openai.com/share/94bb55b2-8eb7-4299-9f8a-996785463502
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
